@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => SurveyorProjects(),
+        '/': (context) => Welcome()
       },
     );
   }
