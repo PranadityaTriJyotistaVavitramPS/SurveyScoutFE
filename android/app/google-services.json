@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "793947844120",
+    "project_id": "surveyscout-9146c",
+    "storage_bucket": "surveyscout-9146c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793947844120:android:d1cde851c970a793c55d6d",
+        "android_client_info": {
+          "package_name": "com.example.surveyscout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793947844120-e9g13p37sdu5e4gkvk6nlk9i74ehncqo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.surveyscout",
+            "certificate_hash": "d63f1e9a419b839b4d15cdeffe0df7bf0cdb8208"
+          }
+        },
+        {
+          "client_id": "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ekwsstJihsdmT3rcru4JoBPYEJL2Fno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
