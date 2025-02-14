@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'clientprojects.dart';
+import 'client/clientprojects.dart';
 
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
