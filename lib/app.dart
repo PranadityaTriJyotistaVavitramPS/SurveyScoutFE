@@ -5,8 +5,8 @@ import 'routes/app_routes.dart';
 import 'controllers/client/project_controller.dart';
 import 'controllers/global/auth_controller.dart';
 import 'controllers/global/payment_controller.dart';
-
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconify_flutter/iconify_flutter.dart'; // For Iconify Widget
 
 class SurveyScoutApp extends StatelessWidget {
   @override
@@ -21,9 +21,9 @@ class SurveyScoutApp extends StatelessWidget {
       title: 'SurveyScout',
       theme: ThemeData(
         primarySwatch: Colors.brown,
-        fontFamily: 'Poppins', // Example custom font
+        textTheme: GoogleFonts.nunitoSansTextTheme(), // Example custom font
       ),
-      initialRoute: AppRoutes.chooseRecruitment,
+      initialRoute: AppRoutes.surveyorProjectDetails,
       getPages: AppPages.pages,
     );
   }

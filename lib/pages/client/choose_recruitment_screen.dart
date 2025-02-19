@@ -1,7 +1,12 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:surveyscout/controllers/client/project_controller.dart';
 import 'package:surveyscout/routes/app_routes.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 
 class ChooseRecruitmentScreen extends StatelessWidget {
   final ProjectController controller = Get.find<ProjectController>();
@@ -9,15 +14,23 @@ class ChooseRecruitmentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF2EEE9),
       appBar: AppBar(
-        title: Text('Buat Proyek'),
+        title: Text('Buat Proyek',style: GoogleFonts.nunitoSans(
+          fontSize: 16,
+          color: Color(0xFF705D54),
+          fontWeight: FontWeight.bold
+        )),
+        backgroundColor: Color(0xFFD7CCC8),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Color(0xFF826754)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Iconify(MaterialSymbols.arrow_back,color: Color(0xFF826754)),
           onPressed: () {},
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.more_vert),
+            icon: Iconify(MaterialSymbols.more_vert,color: Color(0xFF826754)),
             onPressed: () {},
           ),
         ],
@@ -26,36 +39,81 @@ class ChooseRecruitmentScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Text(
-              'Langkah 1',
-              style: TextStyle(
-                color: Color(0xFF705D54),
-                fontSize: 24,
-                fontFamily: 'Source Sans Pro',
-                fontWeight: FontWeight.w700,
-                height: 1,
-              ),
+            //Progress bar
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Progress bar with full width and 16dp spacing
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0), // Add 16dp spacing below progress bar
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF826754),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFD9D9D9),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFD9D9D9),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Title "Langkah 1"
+                Text(
+                  'Langkah 1',
+                  style: TextStyle(
+                    color: Color(0xFF705D54),
+                    fontSize: 24,
+                    fontFamily: 'Source Sans Pro',
+                    fontWeight: FontWeight.w700,
+                    height: 1,
+                  ),
+                ),
+              ],
             ),
+
             SizedBox(height: 8),
             Text(
               'Siapa yang Anda butuhkan dalam proyek ini?',
-              style: TextStyle(
+              style: GoogleFonts.nunitoSans(
                 color: Color(0xFFA3948D),
                 fontSize: 12,
-                fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
               ),
             ),
             SizedBox(height: 24),
             _buildCard(
-              icon: Icons.search,
+              icon: FluentIcons.person_note_24_filled,
               title: 'Surveyor',
               description:
               'Membantu mencari data melalui observasi, wawancara, dan/atau metode lainnya hingga merekapnya.',
             ),
             SizedBox(height: 16),
             _buildCard(
-              icon: Icons.person,
+              icon: FluentIcons.person_chat_24_filled,
               title: 'Responden',
               description:
               'Menjadi narasumber proyek Anda. Adapun, perekapan dilakukan secara mandiri.',
@@ -75,18 +133,16 @@ class ChooseRecruitmentScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      color: Colors.brown[50],
-      elevation: 4,
+      color: Color(0xFFF0E8E4),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.brown[200],
-              child: Icon(
-                icon,
-                color: Colors.white,
-              ),
+            Icon(
+              icon, // Fluent UI Icon
+              color: Color(0xFF705D54),
+              size: 40, // Adjust size if needed
             ),
             SizedBox(width: 16),
             Expanded(
@@ -95,18 +151,20 @@ class ChooseRecruitmentScreen extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 18,
+                    style: GoogleFonts.nunitoSans(
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.brown[900],
+                      color: Color(0xFF705D54),
+                      height: 1.1,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.brown[600],
+                    style: GoogleFonts.nunitoSans(
+                      fontSize: 16,
+                      color: Color(0xFFA3948D),
+                      height: 1.2,
                     ),
                   ),
                 ],

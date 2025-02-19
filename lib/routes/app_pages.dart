@@ -15,7 +15,7 @@ class AppPages {
     GetPage(name: AppRoutes.welcome, page: () => Welcome()),
 
     GetPage(name: AppRoutes.chooseRecruitment, page: () => ChooseRecruitmentScreen()),
-    // GetPage(name: AppRoutes.surveyorProjectDetails, page: () => SurveyorProjectDetailsScreen()),
+    GetPage(name: AppRoutes.surveyorProjectDetails, page: () => SurveyorProjectDetailsScreen()),
     // GetPage(name: AppRoutes.respondentSurveyDetails, page: () => RespondentSurveyDetailsScreen()),
 
 

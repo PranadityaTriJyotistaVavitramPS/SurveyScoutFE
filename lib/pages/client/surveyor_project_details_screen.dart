@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:surveyscout/controllers/client/project_controller.dart';
+import 'package:surveyscout/routes/app_routes.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
+
+class SurveyorProjectDetailsScreen extends StatelessWidget {
+  final ProjectController controller = Get.find<ProjectController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFF2EEE9),
+      appBar: AppBar(
+        title: Text('Buat Proyek',style: GoogleFonts.nunitoSans(
+            fontSize: 16,
+            color: Color(0xFF705D54),
+            fontWeight: FontWeight.bold
+        )),
+        backgroundColor: Color(0xFFD7CCC8),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Color(0xFF826754)),
+        leading: IconButton(
+          icon: Iconify(MaterialSymbols.arrow_back,color: Color(0xFF826754)),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+            icon: Iconify(MaterialSymbols.more_vert,color: Color(0xFF826754)),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            //Progress bar
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Progress bar with full width and 16dp spacing
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0), // Add 16dp spacing below progress bar
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF826754),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF826754),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFD9D9D9),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Title "Langkah 1"
+                Text(
+                  'Langkah 2',
+                  style: TextStyle(
+                    color: Color(0xFF705D54),
+                    fontSize: 24,
+                    fontFamily: 'Source Sans Pro',
+                    fontWeight: FontWeight.w700,
+                    height: 1,
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 8),
+            Text(
+              'Ceritakan kebutuhan proyek Anda. Mohon isi seluruh bagian berikut agar proyek Anda dapat lebih dipahami surveyor.',
+              style: GoogleFonts.nunitoSans(
+                color: Color(0xFFA3948D),
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(height: 24),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
