@@ -1,5 +1,5 @@
 name: surveyscout
-description: "A new Flutter project."
+description: "Cari data tak pernah semudah ini!"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -38,6 +38,7 @@ dependencies:
   get: ^4.7.1
   iconify_flutter: ^0.0.7
   google_fonts: ^6.2.1
+  properties: ^2.1.1
 
 dev_dependencies:
   flutter_test:
