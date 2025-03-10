@@ -16,10 +16,10 @@ class ChooseRecruitmentScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFF2EEE9),
       appBar: AppBar(
-        title: Text('Buat Proyek',style: GoogleFonts.nunitoSans(
-          fontSize: 16,
-          color: Color(0xFF705D54),
-          fontWeight: FontWeight.bold
+        title: Text('Scouting Talent',style: GoogleFonts.nunitoSans(
+            fontSize: 16,
+            color: Color(0xFF705D54),
+            fontWeight: FontWeight.bold
         )),
         backgroundColor: Color(0xFFD7CCC8),
         centerTitle: true,

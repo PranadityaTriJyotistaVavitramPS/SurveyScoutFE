@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../pages/welcome.dart';
 import '../pages/surveyor/surveyorprojects.dart';
+import '../pages/client/clientprojects.dart';
 import '../pages/client/choose_recruitment_screen.dart';
 import '../pages/client/payment_confirmation_screen.dart'; // Ensure this exists
 import '../pages/client/payment_gateway_screen.dart';
@@ -13,10 +14,13 @@ import 'app_routes.dart';
 class AppPages {
   static final pages = [
     GetPage(name: AppRoutes.welcome, page: () => Welcome()),
-
+    GetPage(name: AppRoutes.clientProjectList, page: () => SecondPage()),
     GetPage(name: AppRoutes.chooseRecruitment, page: () => ChooseRecruitmentScreen()),
     GetPage(name: AppRoutes.surveyorProjectDetails, page: () => SurveyorProjectDetailsScreen()),
-    // GetPage(name: AppRoutes.respondentSurveyDetails, page: () => RespondentSurveyDetailsScreen()),
+    GetPage(name: AppRoutes.respondentSurveyDetails, page: () => RespondentSurveyDetailsScreen()),
+    GetPage(name: AppRoutes.respondentCriteriaDetails, page: () => RespondentCriteriaDetailsScreen()),
+    GetPage(name: AppRoutes.transactionReview, page: () => TransactionReviewScreen()),
+
 
 
   ];
