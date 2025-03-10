@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/icon_park_outline.dart';
@@ -7,13 +8,37 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:get/get.dart';
 import 'package:surveyscout/routes/app_routes.dart';
 
-class TransactionReviewScreen extends StatefulWidget {
+class TransactionReviewRespondentScreen extends StatefulWidget {
   @override
-  _TransactionReviewScreenState createState() => _TransactionReviewScreenState();
+  _TransactionReviewRespondentScreenState createState() => _TransactionReviewRespondentScreenState();
 }
 
-class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
+class _TransactionReviewRespondentScreenState extends State<TransactionReviewRespondentScreen> {
 
+  String _projectTitle = "";
+  int _projectCommissionPerPerson = 0;
+  int _projectRespondentAmount = 0;
+  int _totalCommission = 0;
+  int _totalPayment = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Retrieve stored values using GetStorage()
+    _projectTitle = GetStorage().read('project_title') ?? "Judul Proyek Tidak Ditemukan";
+    _projectCommissionPerPerson = GetStorage().read('project_commission_per_person') ?? 0;
+    _projectRespondentAmount = GetStorage().read('project_respondent_amount') ?? 0;
+
+    // Perform calculations inside initState()
+    _totalCommission = _projectCommissionPerPerson * _projectRespondentAmount;
+    _totalPayment = _totalCommission + 5000; // Biaya penanganan 5000
+    
+    //Print debug all numbers
+    print ("projectitle: $_projectTitle");
+    print ("projectComission: $_projectCommissionPerPerson x $_projectRespondentAmount");
+    print ("totalComission: $_totalCommission thus to be $_totalPayment");
+  }
 
   Widget _buildReceiptRow(String label, String value, {bool isBold = false}) {
     return Padding(
@@ -38,7 +63,6 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -160,11 +184,11 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
               ),
               child: Column(
                 children: [
-                  _buildReceiptRow("Komisi", "Rp 200.000"),
+                  _buildReceiptRow("Komisi ($_projectRespondentAmount responden)", "Rp $_totalCommission"),
                   _buildReceiptRow("Biaya Penanganan", "Rp 5.000"),
                   _buildReceiptRow("Biaya Administrasi Bank", "Rp 0"),
                   Divider(color: Color(0xFF826754), thickness: 1),
-                  _buildReceiptRow("Total Pembayaran", "Rp 205.000", isBold: true),
+                  _buildReceiptRow("Total Pembayaran", "Rp $_totalPayment", isBold: true),
                 ],
               ),
             ),

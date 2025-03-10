@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:surveyscout/pages/client/transaction_review_respondent_screen.dart';
 import '../pages/welcome.dart';
 import '../pages/surveyor/surveyorprojects.dart';
 import '../pages/client/clientprojects.dart';
@@ -20,7 +21,7 @@ class AppPages {
     GetPage(name: AppRoutes.respondentSurveyDetails, page: () => RespondentSurveyDetailsScreen()),
     GetPage(name: AppRoutes.respondentCriteriaDetails, page: () => RespondentCriteriaDetailsScreen()),
     GetPage(name: AppRoutes.transactionReview, page: () => TransactionReviewScreen()),
-
+    GetPage(name: AppRoutes.transactionReviewRespondent, page: () => TransactionReviewRespondentScreen()),
 
 
   ];

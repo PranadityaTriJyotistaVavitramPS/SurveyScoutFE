@@ -106,6 +106,7 @@ class ChooseRecruitmentScreen extends StatelessWidget {
             ),
             SizedBox(height: 24),
             _buildCard(
+              onPressed: () => Get.toNamed(AppRoutes.surveyorProjectDetails),
               icon: FluentIcons.person_note_24_filled,
               title: 'Surveyor',
               description:
@@ -113,6 +114,7 @@ class ChooseRecruitmentScreen extends StatelessWidget {
             ),
             SizedBox(height: 16),
             _buildCard(
+              onPressed: () => Get.toNamed(AppRoutes.respondentSurveyDetails),
               icon: FluentIcons.person_chat_24_filled,
               title: 'Responden',
               description:
@@ -128,6 +130,7 @@ class ChooseRecruitmentScreen extends StatelessWidget {
     required IconData icon,
     required String title,
     required String description,
+    required VoidCallback onPressed, // Add this line
   }) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -135,42 +138,45 @@ class ChooseRecruitmentScreen extends StatelessWidget {
       ),
       color: Color(0xFFF0E8E4),
       elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Icon(
-              icon, // Fluent UI Icon
-              color: Color(0xFF705D54),
-              size: 40, // Adjust size if needed
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF705D54),
-                      height: 1.1,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    description,
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 16,
-                      color: Color(0xFFA3948D),
-                      height: 1.2,
-                    ),
-                  ),
-                ],
+      child: InkWell( // Wrap with InkWell
+        onTap: onPressed, // Add this line
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Icon(
+                icon, // Fluent UI Icon
+                color: Color(0xFF705D54),
+                size: 40, // Adjust size if needed
               ),
-            ),
-          ],
+              SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.nunitoSans(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF705D54),
+                        height: 1.1,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      description,
+                      style: GoogleFonts.nunitoSans(
+                        fontSize: 16,
+                        color: Color(0xFFA3948D),
+                        height: 1.2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

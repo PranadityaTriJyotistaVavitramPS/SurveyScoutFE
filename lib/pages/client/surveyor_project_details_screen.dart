@@ -139,6 +139,7 @@ class _SurveyorProjectDetailsScreenState extends State<SurveyorProjectDetailsScr
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () {
+                        _clearFormData();
                         Get.back(); // Close modal
                         Get.toNamed(AppRoutes.clientProjectList);
                         Future.delayed(Duration(milliseconds: 500), () {
@@ -170,6 +171,32 @@ class _SurveyorProjectDetailsScreenState extends State<SurveyorProjectDetailsScr
         );
       },
     );
+  }
+
+  //  CLear data
+  void _clearFormData() {
+    final box = GetStorage();
+    box.remove('project_description');
+    box.remove('project_title');
+    box.remove('project_qualification');
+    box.remove('project_outcome');
+    box.remove('project_commission');
+    box.remove('project_respondent_amount');
+    box.remove('project_location');
+    box.remove('project_deadline');
+
+    // Also clear UI fields if necessary
+    setState(() {
+      _projectDescriptionController.clear();
+      _projectTitleController.clear();
+      _projectQualificationController.clear();
+      _projectOutcomeController.clear();
+      _projectCommissionController.clear();
+      _projectLocationController.clear();
+      _projectDeadlineController.clear();
+    });
+
+    print("All form data cleared!"); // Debugging log
   }
 
   // Widget Komisi, put here because local value of Komisi is inside class

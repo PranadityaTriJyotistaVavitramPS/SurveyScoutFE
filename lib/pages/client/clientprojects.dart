@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'clientchat.dart';
 import 'clientsaya.dart';
 import 'package:surveyscout/routes/app_routes.dart';
@@ -2546,11 +2548,9 @@ class _SecondPageState extends State<SecondPage> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {
-                    print('Custom FAB Terklik!');
-                  },
+                  onPressed: () => Get.toNamed(AppRoutes.chooseRecruitment),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                                          mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
                         Icons.add,

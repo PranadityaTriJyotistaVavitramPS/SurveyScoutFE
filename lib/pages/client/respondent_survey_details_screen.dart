@@ -163,7 +163,8 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () {
-                        Get.back(); // Close modal
+                        _clearFormData();
+                        Get.back();
                         Get.toNamed(AppRoutes.clientProjectList);
                         Future.delayed(Duration(milliseconds: 500), () {
                           Get.snackbar(
@@ -195,6 +196,42 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
       },
     );
   }
+
+  //  CLear data
+  void _clearFormData() {
+    final box = GetStorage();
+    box.remove('project_description');
+    box.remove('project_title');
+    box.remove('project_qualification');
+    box.remove('project_outcome');
+    box.remove('project_commission');
+    box.remove('project_respondent_amount');
+    box.remove('project_location');
+    box.remove('project_deadline');
+    box.remove('project_respondent_kualifikasi_lainnya');
+    box.remove('project_respondent_pekerjaan');
+    box.remove('project_respondent_pendidikan');
+    box.remove('project_respondent_status_kawin');
+    box.remove('project_respondent_hobi');
+    box.remove('project_respondent_kab_kota_tinggal');
+    box.remove('project_respondent_usia_range');
+
+
+    // Also clear UI fields if necessary
+    setState(() {
+      _projectDescriptionController.clear();
+      _projectTitleController.clear();
+      _projectQualificationController.clear();
+      _projectOutcomeController.clear();
+      _projectCommissionController.clear();
+      _projectRespondentAmountController.clear();
+      _projectLocationController.clear();
+      _projectDeadlineController.clear();
+    });
+
+    print("All form data cleared!"); // Debugging log
+  }
+
 
   // Widget Jumlah responden
   Widget _buildRespondentAmountTextField({required TextEditingController controller}) {
@@ -691,7 +728,7 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
             // Lanjut Button (Filled) - Takes Half Width
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: _isFormComplete() ? () => Get.toNamed(AppRoutes.transactionReview) : null, // Disable if incomplete
+                onPressed: _isFormComplete() ? () => Get.toNamed(AppRoutes.respondentCriteriaDetails) : null, // Disable if incomplete
                 icon: Icon(Icons.arrow_forward, size: 20),
                 label: Text("Lanjut", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
