@@ -58,6 +58,7 @@ class _RespondentCriteriaDetailsScreenState extends State<RespondentCriteriaDeta
 
   List<String> _selectedHobbies = [];
 
+
   final List<String> maritalStatusOptions = [
     "Belum Menikah",
     "Menikah",
@@ -106,6 +107,7 @@ class _RespondentCriteriaDetailsScreenState extends State<RespondentCriteriaDeta
   ];
 
   List <String> _selectedEducationLevels = [];
+  List <String> _selectedMaritalStatuses = [];
   List <String> _selectedJobs = [];
 
   final TextEditingController _projectRespondentStatusKawinController = TextEditingController();
@@ -956,9 +958,10 @@ class _RespondentCriteriaDetailsScreenState extends State<RespondentCriteriaDeta
                 context: context,
                 title: "Pilih Status Perkawinan",
                 options: maritalStatusOptions,
-                selectedValues: [_projectRespondentStatusKawinController.text], // Single select
+                selectedValues: _selectedMaritalStatuses, // Single select
                 onConfirm: (selected) {
-                  _projectRespondentStatusKawinController.text = selected.isNotEmpty ? selected.first : "";
+                  _selectedMaritalStatuses = selected;
+                  _projectRespondentStatusKawinController.text =selected.join(", ");
                   _saveProjectRespondentStatusKawin(_projectRespondentStatusKawinController.text);
                   setState(() {});
                 },

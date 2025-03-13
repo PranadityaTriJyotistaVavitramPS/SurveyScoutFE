@@ -288,8 +288,7 @@ class _TransactionReviewRespondentScreenState extends State<TransactionReviewRes
             // Lanjut Button (Filled) - Takes Half Width
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () => Get.back(),
-                // onPressed: _isFormComplete() ? () => Get.toNamed(AppRoutes.transactionReview) : null, // Disable if incomplete
+                onPressed:  () => Get.toNamed(AppRoutes.paymentGateway), // Disable if incomplete
                 icon: Icon(Icons.arrow_forward, size: 20),
                 label: Text("Lanjut", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
