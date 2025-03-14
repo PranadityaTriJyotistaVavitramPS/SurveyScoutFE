@@ -23,7 +23,10 @@ class AppPages {
     GetPage(name: AppRoutes.transactionReview, page: () => TransactionReviewScreen()),
     GetPage(name: AppRoutes.transactionReviewRespondent, page: () => TransactionReviewRespondentScreen()),
 
-    GetPage(name: AppRoutes.paymentGateway, page: () => PaymentGatewayScreen()),
+    GetPage(
+      name: AppRoutes.paymentGateway,
+      page: () => PaymentGatewayScreen(), // ✅ No constructor
+    ),
     GetPage(name: AppRoutes.paymentConfirmation, page: () => PaymentConfirmationScreen()),
 
   ];

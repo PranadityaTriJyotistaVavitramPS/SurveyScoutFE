@@ -265,7 +265,13 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
             Expanded(
               child: ElevatedButton.icon(
                 // onPressed: () => Get.back(),
-                onPressed:  () => Get.toNamed(AppRoutes.paymentGateway), // Disable if incomplete
+                onPressed: () {
+                  String snapUrl = "https://app.sandbox.midtrans.com/snap/v2/vtweb/TRANSACTION_TOKEN"; // Replace with dynamic URL
+
+                  Get.toNamed(AppRoutes.paymentGateway, arguments: {
+                    "snapUrl": snapUrl, // ✅ Pass Snap URL
+                  });
+                }, // Disable if incomplete
                 icon: Icon(Icons.arrow_forward, size: 20),
                 label: Text("Lanjut", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
