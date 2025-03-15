@@ -3,23 +3,37 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/icon_park_outline.dart';
 import 'package:iconify_flutter/icons/icon_park_solid.dart';
+import 'package:iconify_flutter/icons/majesticons.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter/icons/mingcute.dart';
 import 'package:surveyscout/routes/app_routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class PaymentConfirmationScreen extends StatefulWidget {
+class PaymentFailedScreen extends StatefulWidget {
   @override
-  _PaymentConfirmationScreenState createState() => _PaymentConfirmationScreenState();
+  _PaymentFailedScreenState createState() => _PaymentFailedScreenState();
 }
 
-class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
+class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
+  Future<void> _launchWhatsApp() async {
+    final String phoneNumber = "6281800100800"; // Without the "+" sign
+    final Uri whatsappUri = Uri.parse("https://wa.me/$phoneNumber");
+
+    if (await canLaunchUrl(whatsappUri)) {
+      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+    } else {
+      print("Could not launch WhatsApp");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF2EEE9),
       appBar: AppBar(
         title: Text(
-          'Pembayaran Berhasil',
+          'Pembayaran Gagal',
           style: GoogleFonts.nunitoSans(
             fontSize: 16,
             color: Color(0xFF705D54),
@@ -39,26 +53,29 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Iconify(
-              MaterialSymbols.check_circle,
-              color: Color(0xFF4CAF50),
+              Majesticons.emoji_sad,
+              color: Color(0xFFFF9800),
               size: 128,
             ),
             SizedBox(height: 16),
-            Text(
-              'Terima kasih!',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.nunitoSans(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF705D54),
-                height: 1.1,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Maaf, Pembayaran Terkendala',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.nunitoSans(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF705D54),
+                  height: 1.1,
+                ),
               ),
             ),
             SizedBox(height: 8),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal:16),
                 child: Text(
-                  'Pembayaran Anda telah berhasil. Proyek Anda sekarang aktif dan lowongan telah dibuka.',
+                  'Mohon periksa histori transaksi di aplikasi m-banking atau e-wallet Anda, jika tertera berhasil, silakan chat kami untuk mengirimkan bukti.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunitoSans(
                     fontSize: 16,
@@ -79,7 +96,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
             // Kembali Button (Outlined) - Takes Half Width
             Expanded(
               child: OutlinedButton(
-                onPressed: () => Get.offNamed(AppRoutes.clientProjectList),
+                onPressed: _launchWhatsApp,
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Color(0xFFEDE7E2)),
                   backgroundColor: Color(0xFFF1E9E5),
@@ -89,7 +106,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
                     borderRadius: BorderRadius.circular(8), // 8dp rounded rectangle
                   ),
                 ),
-                child: Text("Lihat Proyek", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold, color: Color(0xFF826754))),
+                child: Text("Chat Bantuan", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold, color: Color(0xFF826754))),
               ),
             ),
 

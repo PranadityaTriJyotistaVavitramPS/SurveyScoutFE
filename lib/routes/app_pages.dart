@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:surveyscout/pages/client/payment_confirmation_failed.dart';
+import 'package:surveyscout/pages/client/payment_confirmation_timeout.dart';
 import 'package:surveyscout/pages/client/transaction_review_respondent_screen.dart';
 import '../pages/welcome.dart';
 import '../pages/surveyor/surveyorprojects.dart';
@@ -27,7 +29,9 @@ class AppPages {
       name: AppRoutes.paymentGateway,
       page: () => PaymentGatewayScreen(), // ✅ No constructor
     ),
-    GetPage(name: AppRoutes.paymentConfirmation, page: () => PaymentConfirmationScreen()),
 
+    GetPage(name: AppRoutes.paymentConfirmation, page: () => PaymentConfirmationScreen()),
+    GetPage(name: AppRoutes.paymentConfirmationFailed, page: () => PaymentFailedScreen()),
+    GetPage(name: AppRoutes.paymentConfirmationTimeout, page: () => PaymentTimeoutScreen()),
   ];
 }
