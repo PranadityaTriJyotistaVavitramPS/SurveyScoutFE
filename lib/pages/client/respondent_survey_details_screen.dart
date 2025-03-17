@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,6 +28,7 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
   final TextEditingController _projectRespondentAmountController = TextEditingController();
   final TextEditingController _projectLocationController = TextEditingController();
   final TextEditingController _projectDeadlineController = TextEditingController();
+  final TextEditingController _projectWorkDeadlineController = TextEditingController();
 
   void _calculateTotalKomisi() {
     String commissionText = _projectCommissionController.text;
@@ -59,7 +58,8 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
         _projectCommissionController.text.isNotEmpty &&
         _projectRespondentAmountController.text.isNotEmpty &&
         _projectLocationController.text.isNotEmpty &&
-        _projectDeadlineController.text.isNotEmpty;
+        _projectDeadlineController.text.isNotEmpty &&
+        _projectWorkDeadlineController.text.isNotEmpty;
   }
 
   bool _isFormFilled() {
@@ -69,7 +69,9 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
         _projectOutcomeController.text.isNotEmpty ||
         _projectCommissionController.text.isNotEmpty ||
         _projectRespondentAmountController.text.isNotEmpty ||
-        _projectLocationController.text.isNotEmpty;
+        _projectLocationController.text.isNotEmpty ||
+        _projectDeadlineController.text.isNotEmpty ||
+        _projectWorkDeadlineController.text.isNotEmpty;
   }
 
 
@@ -227,6 +229,7 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
       _projectRespondentAmountController.clear();
       _projectLocationController.clear();
       _projectDeadlineController.clear();
+      _projectWorkDeadlineController.clear();
     });
 
     print("All form data cleared!"); // Debugging log
@@ -359,6 +362,7 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
     _projectRespondentAmountController.text = GetStorage().read('project_respondent_amount') ?? '';
     _projectLocationController.text = GetStorage().read('project_location') ?? '';
     _projectDeadlineController.text = GetStorage().read('project_deadline') ?? '';
+    _projectWorkDeadlineController.text = GetStorage().read('project_work_deadline') ?? '';
 
 
     // Get today's date +7 days at 23:59
@@ -370,6 +374,7 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
 
     // Set initial text with formatted deadline
     _projectDeadlineController.text = GetStorage().read('project_deadline') ?? formattedDeadline;
+    _projectWorkDeadlineController.text = GetStorage().read('project_work_deadline') ?? formattedDeadline;
   }
 
   @override
@@ -382,6 +387,7 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
     _projectLocationController.dispose();
     _projectRespondentAmountController.dispose();
     _projectDeadlineController.dispose();
+    _projectWorkDeadlineController.dispose();
     super.dispose();
   }
 
@@ -413,6 +419,10 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
     GetStorage().write('project_deadline', value);
   }
 
+  void _saveProjectWorkDeadline(String value) {
+    GetStorage().write('project_work_deadline', value);
+  }
+
   void _saveRespondentAmount(String value) {
     GetStorage().write('project_respondent_amount', value);
   }
@@ -427,10 +437,11 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
     _saveProjectLocation(_projectLocationController.text);
     _saveRespondentAmount(_projectRespondentAmountController.text);
     _saveProjectDeadline(_projectDeadlineController.text);
+    _saveProjectWorkDeadline(_projectWorkDeadlineController.text);
   }
 
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now().add(Duration(days: 7)),
@@ -459,8 +470,12 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
 
         // Update the controller with the formatted text
         setState(() {
-          _projectDeadlineController.text = formattedDate;
-          _saveProjectDeadline(formattedDate); // Save properly
+          controller.text = formattedDate;
+          if (controller == _projectDeadlineController) {
+            _saveProjectDeadline(formattedDate); // Save properly
+          } else if (controller == _projectWorkDeadlineController) {
+            _saveProjectWorkDeadline(formattedDate); // Save properly
+          }
         });
       }
     }
@@ -687,7 +702,19 @@ class _RespondentSurveyDetailsScreenState extends State<RespondentSurveyDetailsS
               controller: _projectDeadlineController,
               hintText: "Pilih tenggat waktu pengiriman",
               icon: Iconify(AntDesign.calendar, color: Color(0xFF826754)),
-              onTap: () => _selectDate(context),
+              onTap: () => _selectDate(context, _projectDeadlineController),
+              onChanged: (value) {
+                _saveProjectTitle(value);
+                setState(() {}); // Force UI to update
+              },
+            ),
+            SizedBox(height: 16),
+            _buildDateTimeField(
+              title: "Tenggat Waktu Pengerjaan",
+              controller: _projectWorkDeadlineController,
+              hintText: "Pilih tenggat waktu pengerjaan",
+              icon: Iconify(AntDesign.calendar, color: Color(0xFF826754)),
+              onTap: () => _selectDate(context, _projectWorkDeadlineController),
               onChanged: (value) {
                 _saveProjectTitle(value);
                 setState(() {}); // Force UI to update

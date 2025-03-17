@@ -138,13 +138,24 @@ class _TransactionReviewRespondentScreenState extends State<TransactionReviewRes
                           ),
                         ),
                       ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 8,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF826754),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
 
-                // Title "Langkah 3"
                 Text(
-                  'Langkah 3',
+                  'Langkah 4',
                   style: TextStyle(
                     color: Color(0xFF705D54),
                     fontSize: 24,
