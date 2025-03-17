@@ -6,6 +6,7 @@ import 'package:iconify_flutter/icons/icon_park_solid.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:get/get.dart';
 import 'package:surveyscout/routes/app_routes.dart';
+import 'package:get_storage/get_storage.dart';
 
 class TransactionReviewScreen extends StatefulWidget {
   @override
@@ -14,6 +15,16 @@ class TransactionReviewScreen extends StatefulWidget {
 
 class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
 
+  final TextEditingController _projectRespondentKualifikasiLainnyaController = TextEditingController();
+  final TextEditingController _projectRespondentUsiaRangeController = TextEditingController();
+  final TextEditingController _minAgeController = TextEditingController();
+  final TextEditingController _maxAgeController = TextEditingController();
+  final TextEditingController _projectRespondentKabKotaTinggalController = TextEditingController();
+  final TextEditingController _projectRespondentHobiController = TextEditingController();
+  final List<String> _selectedHobbies = [];
+  final List<String> _selectedEducationLevels = [];
+  final List<String> _selectedMaritalStatuses = [];
+  final List<String> _selectedJobs = [];
 
   Widget _buildReceiptRow(String label, String value, {bool isBold = false}) {
     return Padding(
@@ -39,6 +50,155 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
     );
   }
 
+  void _clearFormData() {
+    final box = GetStorage();
+    box.remove('project_respondent_kualifikasi_lainnya');
+    box.remove('project_respondent_usia_range');
+    box.remove('project_respondent_kab_kota_tinggal');
+    box.remove('project_respondent_hobi');
+    box.remove('project_respondent_status_kawin');
+    box.remove('project_respondent_pendidikan');
+    box.remove('project_respondent_pekerjaan');
+
+    // Also clear UI fields if necessary
+    setState(() {
+      _projectRespondentKualifikasiLainnyaController.clear();
+      _projectRespondentUsiaRangeController.clear();
+      _minAgeController.clear();
+      _maxAgeController.clear();
+      _projectRespondentKabKotaTinggalController.clear();
+      _projectRespondentHobiController.clear();
+      _selectedHobbies.clear();
+      _selectedEducationLevels.clear();
+      _selectedMaritalStatuses.clear();
+      _selectedJobs.clear();
+    });
+
+    print("All form data cleared!"); // Debugging log
+  }
+
+  void _showSaveDraftBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      ),
+      backgroundColor: Color(0xFFF0E8E4),
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Drag handle
+            Container(
+              width: 60,
+              height: 4,
+              margin: EdgeInsets.only(top: 8),
+              decoration: BoxDecoration(
+                color: Color(0xFFB0B0B0),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            SizedBox(height: 32),
+
+            // Title
+            Text(
+              "Simpan sebagai draft?",
+              style: TextStyle(
+                color: Color(0xFF705D54),
+                fontSize: 24,
+                fontFamily: 'Source Sans Pro',
+                fontWeight: FontWeight.w700,
+                height: 1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 12),
+
+            // Subtitle
+            Text(
+              "Anda dapat melanjutkannya lain kali",
+              style: GoogleFonts.nunitoSans(
+                fontSize: 14,
+                color: Color(0xFFA3948D),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 32),
+
+            // Buttons Section with Background Color
+            Container(
+              padding: EdgeInsets.all(16),
+              color: Color(0xFF826754), // Background color behind buttons
+              child: Row(
+                children: [
+                  // Simpan Button (Filled)
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.back(); // Close modal
+                        Get.toNamed(AppRoutes.clientProjectList);
+                        Future.delayed(Duration(milliseconds: 500), () {
+                          Get.snackbar(
+                            "Draft tersimpan",
+                            "Anda dapat melanjutkan pengisian proyek kapan saja.",
+                            snackPosition: SnackPosition.BOTTOM, // Snackbar at bottom
+                            backgroundColor: Color(0xFF826754),
+                            colorText: Colors.white,
+                            margin: EdgeInsets.all(16),
+                          );
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFEDE7E2), // Match "Lanjut" button
+                        foregroundColor: Color(0xFF826754), // Text color
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // 8dp rounded rectangle
+                        ),
+                      ),
+                      child: Text("Ya, Simpan", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+
+                  SizedBox(width: 8), // Space between buttons
+
+                  // Jangan Simpan Button (Outlined)
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _clearFormData();
+                        Get.back();
+                        Get.toNamed(AppRoutes.clientProjectList);
+                        Future.delayed(Duration(milliseconds: 500), () {
+                          Get.snackbar(
+                            "Proyek diurungkan",
+                            "Anda membatalkan proyek ini.",
+                            snackPosition: SnackPosition.BOTTOM, // Snackbar at bottom
+                            backgroundColor: Color(0xFF826754),
+                            colorText: Colors.white,
+                            margin: EdgeInsets.all(16),
+                          );
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Color(0xFFEDE7E2)), // Match "Kembali" button
+                        foregroundColor: Color(0xFFEDE7E2),
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // 8dp rounded rectangle
+                        ),
+                      ),
+                      child: Text("Jangan Simpan", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +218,27 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
         iconTheme: IconThemeData(color: Color(0xFF826754)),
         leading: IconButton(
           icon: Iconify(MaterialSymbols.arrow_back, color: Color(0xFF826754)),
-          onPressed: () {},
+          onPressed: () => Get.back(),
         ),
         actions: [
           IconButton(
             icon: Iconify(MaterialSymbols.more_vert, color: Color(0xFF826754)),
-            onPressed: () {},
+            onPressed: () {
+              showMenu(
+                context: context,
+                position: RelativeRect.fromLTRB(100, 100, 0, 0),
+                items: [
+                  PopupMenuItem(
+                    value: 'save_draft',
+                    child: Text('Simpan sebagai draft'),
+                  ),
+                ],
+              ).then((value) {
+                if (value == 'save_draft') {
+                  _showSaveDraftBottomSheet();
+                }
+              });
+            },
           ),
         ],
       ),

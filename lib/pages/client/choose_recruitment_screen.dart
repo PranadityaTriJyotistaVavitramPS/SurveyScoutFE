@@ -26,7 +26,7 @@ class ChooseRecruitmentScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Color(0xFF826754)),
         leading: IconButton(
           icon: Iconify(MaterialSymbols.arrow_back,color: Color(0xFF826754)),
-          onPressed: () {},
+          onPressed: () => Get.back(),
         ),
         actions: [
           IconButton(

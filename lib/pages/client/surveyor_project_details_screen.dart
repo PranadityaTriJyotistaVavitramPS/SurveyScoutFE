@@ -391,12 +391,27 @@ class _SurveyorProjectDetailsScreenState extends State<SurveyorProjectDetailsScr
         iconTheme: IconThemeData(color: Color(0xFF826754)),
         leading: IconButton(
           icon: Iconify(MaterialSymbols.arrow_back,color: Color(0xFF826754)),
-          onPressed: () {},
+          onPressed: () => Get.back(),
         ),
         actions: [
           IconButton(
             icon: Iconify(MaterialSymbols.more_vert,color: Color(0xFF826754)),
-            onPressed: () {},
+            onPressed: () {
+              showMenu(
+                context: context,
+                position: RelativeRect.fromLTRB(100, 100, 0, 0),
+                items: [
+                  PopupMenuItem(
+                    value: 'save_draft',
+                    child: Text('Simpan sebagai draft'),
+                  ),
+                ],
+              ).then((value) {
+                if (value == 'save_draft') {
+                  _showSaveDraftBottomSheet();
+                }
+              });
+            },
           ),
         ],
       ),

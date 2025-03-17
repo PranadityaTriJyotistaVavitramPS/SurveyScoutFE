@@ -45,7 +45,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
         iconTheme: IconThemeData(color: Color(0xFF826754)),
         leading: IconButton(
           icon: Iconify(MaterialSymbols.arrow_back, color: Color(0xFF826754)),
-          onPressed: () => Get.toNamed(AppRoutes.clientProjectList),
+          onPressed: () => Get.back(),
         ),
       ),
       body: Center(
