@@ -19,12 +19,26 @@ class NIKInputField extends StatefulWidget {
 class _ClientSignUpState extends State<ClientSignUp> {
   final TextEditingController _controllernik = TextEditingController();
   String? errorMessage;
+  String? _pinError;
 
   @override
   void dispose() {
     _controllernik.dispose();
     super.dispose();
   }
+
+  void _validatePins() {
+    setState(() {
+      if (_controller10.text.isNotEmpty && _controller11.text.isNotEmpty) {
+        if (_controller10.text != _controller11.text) {
+          _pinError = "PIN tidak cocok!";
+        } else {
+          _pinError = null;
+        }
+      }
+    });
+  }
+
 
   void _validateFieldsnik(String value) {
     String? newError;
@@ -88,13 +102,13 @@ class _ClientSignUpState extends State<ClientSignUp> {
           _controller2.text.isNotEmpty && //jenis kelamin
           _controller3.text.isNotEmpty && //tanggal lahir
           _controller4.text.isNotEmpty && //nomor telepon
-          //_controller5.text.isNotEmpty &&
+          _controller5.text.isNotEmpty && //nik
           _controller6.text.isNotEmpty && //nama bank
           _controller7.text.isNotEmpty && //nomor rekening
           _controller8.text.isNotEmpty && //nama perusahaan
-          //_controller9.text.isNotEmpty &&
+          _controller9.text.isNotEmpty && //jenis perusahaan
           _controller10.text.isNotEmpty && //pin akses 1
-          _controller11.text.isNotEmpty; //pin akses 2
+          _controller11.text.isNotEmpty && (_controller10.text == _controller11.text); //pin akses 2
 
       nomortext = allFilled ? 1 : 0;
     });
@@ -529,7 +543,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.9,
                                   child: TextField(
-                                    controller: _controllernik,
+                                    controller: _controller5,
                                     onChanged: _validateFieldsnik,
                                     keyboardType: TextInputType.number,
                                     maxLength: 16,
@@ -859,6 +873,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                       onChanged: (value) {
                                         setState(() {
                                           _selectedCompany = value!;
+                                          _controller9.text = value; // Simpan ke controller
                                         });
                                       },
                                       fillColor: MaterialStateProperty.resolveWith<Color>(
@@ -890,6 +905,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                       onChanged: (value) {
                                         setState(() {
                                           _selectedCompany = value!;
+                                          _controller9.text = value; // Simpan ke controller
                                         });
                                       },
                                       fillColor: MaterialStateProperty.resolveWith<Color>(
@@ -968,10 +984,15 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                     flex: 9, // Memberikan lebih banyak ruang pada TextField
                                     child: TextField(
                                       controller: _controller10,
-                                      onChanged: (value) => _validateFields(),
+
+                                      onChanged: (value) {
+                                        _validatePins();
+                                        _validateFields();
+                                      },
                                       obscureText: _isObscured, // Kontrol apakah teks disembunyikan
                                       decoration: InputDecoration(
                                         hintText: '6 digit, hanya angka',
+
                                         hintStyle: TextStyle(
                                           color: Color(0xFFB0B0B0),
                                           fontSize: 16,
@@ -1001,6 +1022,26 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                 ],
                               ),
                             ),
+                            if (_pinError != null)
+                              Column(
+                                children: [
+                                  SizedBox(width: 40),
+                                  Wrap(
+                                    children: [
+                                      Text(
+                                        _pinError!,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontFamily: 'NunitoSans',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                       ),
@@ -1058,10 +1099,14 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                     flex: 9, // Memberikan lebih banyak ruang pada TextField
                                     child: TextField(
                                       controller: _controller11,
-                                      onChanged: (value) => _validateFields(),
+                                      onChanged: (value) {
+                                        _validatePins();
+                                        _validateFields();
+                                      },
                                       obscureText: _isObscured, // Kontrol apakah teks disembunyikan
                                       decoration: InputDecoration(
                                         hintText: 'Masukkan kembali PIN Akses',
+
                                         hintStyle: TextStyle(
                                           color: Color(0xFFB0B0B0),
                                           fontSize: 16,
@@ -1091,6 +1136,26 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                 ],
                               ),
                             ),
+                            if (_pinError != null)
+                              Column(
+                                children: [
+                                  SizedBox(width: 40),
+                                  Wrap(
+                                    children: [
+                                      Text(
+                                        _pinError!,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontFamily: 'NunitoSans',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                       ),
