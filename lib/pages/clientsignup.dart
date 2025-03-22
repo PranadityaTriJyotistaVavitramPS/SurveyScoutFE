@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'clientprojects.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
 
@@ -9,10 +10,36 @@ class ClientSignUp extends StatefulWidget {
   State<ClientSignUp> createState() => _ClientSignUpState();
 }
 
+class NIKInputField extends StatefulWidget {
+  @override
+  State<ClientSignUp> createState() => _ClientSignUpState();
+}
 
 
 class _ClientSignUpState extends State<ClientSignUp> {
-  Future<void> selectDate() async {
+  final TextEditingController _controllernik = TextEditingController();
+  String? errorMessage;
+
+  @override
+  void dispose() {
+    _controllernik.dispose();
+    super.dispose();
+  }
+
+  void _validateFieldsnik(String value) {
+    String? newError;
+    if (value.length != 16 || !RegExp(r'^\d{16}$').hasMatch(value)) {
+      newError = "NIK wajib sebanyak 16 digit dan berupa angka";
+    }
+
+    if (newError != errorMessage) {
+      setState(() {
+        errorMessage = newError;
+      });
+    }
+  }
+
+  Future<DateTime?> selectDate() async {
     DateTime? _picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -34,12 +61,9 @@ class _ClientSignUpState extends State<ClientSignUp> {
       },
     );
 
-    if (_picked != null) {
-      setState(() {
-        _dateController.text = DateFormat('dd/MM/yyyy').format(_picked);
-      });
-    }
+    return _picked;
   }
+
 
   TextEditingController _dateController = TextEditingController();
   final TextEditingController _controller1 = TextEditingController();
@@ -54,22 +78,23 @@ class _ClientSignUpState extends State<ClientSignUp> {
   final TextEditingController _controller10 = TextEditingController();
   final TextEditingController _controller11 = TextEditingController();
   String? _selectedGender;
+  String? _selectedCompany;
   int nomortext = 0;
 
   void _validateFields() {
     setState(() {
       // Periksa apakah semua TextField sudah terisi
-      bool allFilled = _controller1.text.isNotEmpty &&
-          _controller2.text.isNotEmpty &&
-          _controller3.text.isNotEmpty &&
-          _controller4.text.isNotEmpty &&
-          _controller5.text.isNotEmpty &&
-          _controller6.text.isNotEmpty &&
-          _controller7.text.isNotEmpty &&
-          _controller8.text.isNotEmpty &&
-          _controller9.text.isNotEmpty &&
-          _controller10.text.isNotEmpty &&
-          _controller11.text.isNotEmpty;
+      bool allFilled = _controller1.text.isNotEmpty && //nama lengkap
+          _controller2.text.isNotEmpty && //jenis kelamin
+          _controller3.text.isNotEmpty && //tanggal lahir
+          _controller4.text.isNotEmpty && //nomor telepon
+          //_controller5.text.isNotEmpty &&
+          _controller6.text.isNotEmpty && //nama bank
+          _controller7.text.isNotEmpty && //nomor rekening
+          _controller8.text.isNotEmpty && //nama perusahaan
+          //_controller9.text.isNotEmpty &&
+          _controller10.text.isNotEmpty && //pin akses 1
+          _controller11.text.isNotEmpty; //pin akses 2
 
       nomortext = allFilled ? 1 : 0;
     });
@@ -226,7 +251,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                     Container(
                       width: 250,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start, // Agar sejajar kiri
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Jenis Kelamin',
@@ -250,6 +275,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedGender = value!;
+                                        _controller2.text = value; // Simpan ke controller
                                       });
                                     },
                                     fillColor: MaterialStateProperty.resolveWith<Color>(
@@ -260,9 +286,9 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                         return Color(0xFF705D54);
                                       },
                                     ),
-
                                   ),
-                                  Text('Pria',
+                                  Text(
+                                    'Pria',
                                     style: TextStyle(
                                       color: Color(0xFF705D54),
                                       fontSize: 16,
@@ -281,6 +307,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedGender = value!;
+                                        _controller2.text = value; // Simpan ke controller
                                       });
                                     },
                                     fillColor: MaterialStateProperty.resolveWith<Color>(
@@ -291,9 +318,9 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                         return Color(0xFF705D54);
                                       },
                                     ),
-
                                   ),
-                                  Text('Wanita',
+                                  Text(
+                                    'Wanita',
                                     style: TextStyle(
                                       color: Color(0xFF705D54),
                                       fontSize: 16,
@@ -308,6 +335,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                         ],
                       ),
                     ),
+
                   ],
                 ),
               ),
@@ -350,7 +378,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             ),
                             SizedBox(height: 15),
                             TextField(
-                              controller: _dateController,
+
+                              controller: _controller3,
                               decoration: InputDecoration(
                                 labelText: 'DD-MM-YYYY',
                                 labelStyle: TextStyle(color: Color(0xFF826754)),
@@ -366,9 +395,15 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                 ),
                               ),
                               readOnly: true,
-                              onTap: () {
-                                selectDate();
+                              onTap: () async {
+                                DateTime? pickedDate = await selectDate();
+                                if (pickedDate != null) {
+                                  setState(() {
+                                    _controller3.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+                                  });
+                                }
                               },
+
                             ),
 
 
@@ -456,63 +491,90 @@ class _ClientSignUpState extends State<ClientSignUp> {
               //NIK########################################################################
               Container(
                 width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/nik.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'NIK',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/nik.png',
+                              width: 30,
+                              height: 30,
+                              fit: BoxFit.cover,
                             ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                controller: _controller5,
-                                onChanged: (value) => _validateFields(),
-                                decoration: InputDecoration(
-                                  hintText: '3403130101901001',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Container(
+                          width: 250,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'NIK',
+                                  style: TextStyle(
+                                    color: Color(0xFF705D54),
                                     fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
+                                    fontFamily: 'NunitoSans',
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
                                 ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
+                                SizedBox(height: 2),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.9,
+                                  child: TextField(
+                                    controller: _controllernik,
+                                    onChanged: _validateFieldsnik,
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 16,
+                                    decoration: InputDecoration(
+                                      hintText: '3403130101901001',
+                                      hintStyle: TextStyle(
+                                        color: Color(0xFFB0B0B0),
+                                        fontSize: 16,
+                                        fontFamily: 'NunitoSans',
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                                      isDense: true,
+                                      border: InputBorder.none,
+                                      counterText: "",
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 2),
+                                if (errorMessage != null)
+                                  Column(
+                                    children: [
+                                      SizedBox(width: 40),
+                                      Wrap(
+                                        children: [
+                                          Text(
+                                            errorMessage!,
+                                            softWrap: true,
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 12,
+                                              fontFamily: 'NunitoSans',
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                              ],
                             ),
-
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
@@ -785,26 +847,72 @@ class _ClientSignUpState extends State<ClientSignUp> {
                               ),
                             ),
                             SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                controller: _controller9,
-                                onChanged: (value) => _validateFields(),
-                                decoration: InputDecoration(
-                                  hintText: 'Swasta',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Radio<String>(
+                                      value: 'Perusahaan',
+                                      groupValue: _selectedCompany,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedCompany = value!;
+                                        });
+                                      },
+                                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                          if (states.contains(MaterialState.selected)) {
+                                            return Color(0xFF705D54);
+                                          }
+                                          return Color(0xFF705D54);
+                                        },
+                                      ),
+
+                                    ),
+                                    Text('Perusahaan',
+                                      style: TextStyle(
+                                        color: Color(0xFF705D54),
+                                        fontSize: 16,
+                                        fontFamily: 'NunitoSans',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Radio<String>(
+                                      value: 'Perorangan',
+                                      groupValue: _selectedCompany,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedCompany = value!;
+                                        });
+                                      },
+                                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                          if (states.contains(MaterialState.selected)) {
+                                            return Color(0xFF705D54);
+                                          }
+                                          return Color(0xFF705D54);
+                                        },
+                                      ),
+
+                                    ),
+                                    Text('Perorangan',
+                                      style: TextStyle(
+                                        color: Color(0xFF705D54),
+                                        fontSize: 16,
+                                        fontFamily: 'NunitoSans',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
 
                           ],
@@ -814,11 +922,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
+
               SizedBox(height: 15),
 
               //Pin Akses1########################################################################
