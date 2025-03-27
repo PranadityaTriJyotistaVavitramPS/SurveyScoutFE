@@ -1416,6 +1416,38 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
+
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Merekrut pelamar ini akan ",
+                      style: TextStyle(
+                        fontFamily: "NunitoSans",
+                        color: Color(0xFF3A2B24),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "otomatis menolak 3 pelamar lainnya.",
+                          style: TextStyle(
+                            fontFamily: "NunitoSans",
+                            color: Colors.red,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.red,
+
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
                 Container(
                   padding: EdgeInsets.all(30),
                   decoration: BoxDecoration(
@@ -1426,32 +1458,49 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                     children: [
 
                       Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF1E9E5),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Ya, rekrut",
+                                style: TextStyle(
+                                  color: Color(0xFF826754),
+                                  fontFamily: "NunitoSans",
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Expanded(
                         child: GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
-                            Future.delayed(Duration.zero, () {
-                              _rekrutpelamarini(context); // Tampilkan pop-up kedua
-                            });
+
                           },
                           child: Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Color(0xFFF1E9E5),
+
                               borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Color(0xFFF1E9E5), width: 1),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.account_box,
-                                  color: Color(0xFF826754),
-                                  size: 24,
-                                ),
-                                SizedBox(width: 5),
+
                                 Text(
-                                  "Ya, rekrut",
+                                  "Batal",
                                   style: TextStyle(
-                                    color: Color(0xFF826754),
+                                    color: Color(0xFFF1E9E5),
                                     fontFamily: "NunitoSans",
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -1461,37 +1510,7 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 5),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
 
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Color(0xFFF1E9E5), width: 1),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.not_interested,
-                                color: Color(0xFFF1E9E5),
-                                size: 24,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                "Tolak",
-                                style: TextStyle(
-                                  color: Color(0xFFF1E9E5),
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                      ),
 
                     ],
                   ),
