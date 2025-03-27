@@ -1072,7 +1072,31 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                     )
                   ],
                 ),
-                
+                Container(
+                  width: double.infinity,
+
+                  child: Text.rich(
+                    TextSpan(
+                      text: "16 lainnya telah ditolak. ",
+                      style: TextStyle(
+                        fontFamily: "NunitoSans",
+                        color: Color(0xFFA3948D),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Tampilkan?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             ),
           ),
