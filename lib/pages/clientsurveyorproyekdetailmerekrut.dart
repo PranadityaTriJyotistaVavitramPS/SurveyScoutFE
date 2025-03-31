@@ -537,18 +537,27 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundColor: Colors.grey[400],
-                        child: Icon(
-                          Icons.question_mark,
-                          color: Colors.white,
-                          size: 18,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Future.delayed(Duration.zero, () {
+                          _apaartiangkaini(context); // Tampilkan pop-up kedua
+                        });
+                      },
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Colors.grey[400],
+                          child: Icon(
+                            Icons.question_mark,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
+
                   ],
                 ),
                 SizedBox(height: 20),
@@ -1797,5 +1806,169 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
     );
   }
 
+  void _apaartiangkaini(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(0),
+            color: Color(0xFFF1E9E5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 24),
+                Text(
+                  "Apa arti angka ini?",
+                  style: TextStyle(
+                    fontFamily: 'SourceSans3',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF705D54),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage('assets/images/orangmenelepon.png'),
+                    ),
+                    Positioned(
+                      bottom: -15,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Container(
+                          width: 60,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFD7CCC8),
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Color(0xFF826754),
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(0, 0, 0, 0.25),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 6,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.thumb_up,
+                                color: Color(0xFF826754),
+                                size: 12,
+                              ),
+                              SizedBox(width: 2),
+                              Text(
+                                "85%",
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF826754),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(26),
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: Color(0xFFA3948D), fontSize: 16, fontFamily: "NunitoSans", fontWeight: FontWeight.w400),
+                      children: [
+                        TextSpan(
+                          text:
+                          'Persentase dengan simbol jari jempol adalah indikator ',
+                        ),
+                        TextSpan(
+                          text: 'ScoutTrust',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text:
+                          ' yang menunjukkan:\n'
+                              '• Pencapaian surveyor dalam menyelesaikan proyek terdahulu sebelum tenggat waktu\n'
+                              '• Akumulasi penilaian klien sebelumnya\n'
+                              '• Kecepatan merespons\n'
+                              'Semakin tinggi persentase, semakin baik',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+
+                Container(
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+
+
+                  ),
+                  child: Row(
+                    children: [
+
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF826754),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+                                Text(
+                                  "Mengerti",
+                                  style: TextStyle(
+                                    color: Color(0xFFF1E9E5),
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
 }
