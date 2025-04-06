@@ -7,8 +7,6 @@ class Clientsaya extends StatefulWidget {
   _SecondPageState createState() => _SecondPageState();
 }
 
-
-
 class _SecondPageState extends State<Clientsaya> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
@@ -105,7 +103,7 @@ class _SecondPageState extends State<Clientsaya> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage('assets/images/layananpelanggan.png'),
+                              image: AssetImage('assets/images/ellipse2.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -222,25 +220,47 @@ class _SecondPageState extends State<Clientsaya> {
                       ),
                     ),
                     SizedBox(height: 5),
-                    Container(
-                      width: double.infinity,
-                      height: 35, // Tinggi kontainer keempat
-                      decoration: BoxDecoration(
-                        color: Color(0xFFA3948D),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Ubah Profil',
-                          style: TextStyle(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) => HalamanBaru(),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFA3948D),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Ubah Profil',
+                            style: TextStyle(
                               color: Color(0xFFEDE7E2),
                               fontFamily: "NunitoSans",
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
                     ),
+
                   ],
                 ),
               ),
@@ -1050,4 +1070,94 @@ class _SecondPageState extends State<Clientsaya> {
     );
   }
 
+
+
+}
+
+class HalamanBaru extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: Container(
+          padding: EdgeInsets.only(top: 20),
+          color: Color(0xFFD7CCC8),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            toolbarHeight: 50,
+            centerTitle: true,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Color(0xFF705D54)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            title: Text(
+              'Ubah Profil',
+              style: TextStyle(
+                fontFamily: 'NutinoSans',
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+                color: Color(0xFF705D54),
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(27),
+        width: double.infinity,
+        height: double.infinity,
+        color: const Color(0xFFF2EEE9), // Warna latar belakang
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, // Menyusun konten di kiri
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                color: Color(0xFFEDE7E2),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.none,
+                        children: [
+                          CircleAvatar(
+                            radius: 24,
+                            backgroundImage: AssetImage('assets/images/ellipse2.png'),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Color(0xFF826754),
+                              child: Icon(Icons.edit, color: Color(0xFFffffff), size: 10),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Agus Ginting',
+                        style: TextStyle(
+                          fontFamily: 'NutinoSans',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          color: Color(0xFF705D54),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
