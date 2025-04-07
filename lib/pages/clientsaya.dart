@@ -4,27 +4,30 @@ import 'clientchat.dart';
 
 class Clientsaya extends StatefulWidget {
   @override
-  _SecondPageState createState() => _SecondPageState();
+  _ClientSayaPageState createState() => _ClientSayaPageState();
 }
 
-class _SecondPageState extends State<Clientsaya> {
+class _ClientSayaPageState extends State<Clientsaya> {
+  String? _selectedJenisClient;
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
+  final TextEditingController _controller9 = TextEditingController();
+  String? _selectedCompany;
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      backgroundColor: Color(0xFFF1E9E5), // Background berwarna #F1E9E5
+      backgroundColor: Color(0xFFF1E9E5),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(110), // Tinggi AppBar diatur menjadi 130
+        preferredSize: Size.fromHeight(110),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFFF2EEE9), // Header berwarna #D7CCC8
+          backgroundColor: Color(0xFFF2EEE9),
           flexibleSpace: Padding(
-            padding: const EdgeInsets.all(27.0), // Padding diatur menjadi 27
+            padding: const EdgeInsets.all(27.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -224,7 +227,7 @@ class _SecondPageState extends State<Clientsaya> {
                       onTap: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => HalamanBaru(),
+                            pageBuilder: (context, animation, secondaryAnimation) => JenisPenggunaWidget(),
                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);
                               const end = Offset.zero;
@@ -1074,7 +1077,13 @@ class _SecondPageState extends State<Clientsaya> {
 
 }
 
-class HalamanBaru extends StatelessWidget {
+class JenisPenggunaWidget extends StatefulWidget {
+  @override
+  HalamanBaru createState() => HalamanBaru();
+}
+
+class HalamanBaru extends State<JenisPenggunaWidget> {
+  String _jenisPengguna = 'Perusahaan';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1110,7 +1119,7 @@ class HalamanBaru extends StatelessWidget {
         padding: const EdgeInsets.all(27),
         width: double.infinity,
         height: double.infinity,
-        color: const Color(0xFFF2EEE9), // Warna latar belakang
+        color: const Color(0xFFF1E9E5), // Warna latar belakang
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start, // Menyusun konten di kiri
@@ -1154,8 +1163,427 @@ class HalamanBaru extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 12),
+
+              //jenis kelamin ---------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(Icons.wc, color: Color(0xFFC4B8B1), size: 25),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+
+                    Container(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Jenis Kelamin',
+                            style: TextStyle(
+                              color: Color(0xFFC4B8B1),
+                              fontSize: 12,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Pria',
+                            style: TextStyle(
+                              color: Color(0xFFC4B8B1),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Color(0xFFC4B8B1),
+              ),
+
+              //tanggal lahir ---------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(Icons.date_range, color: Color(0xFFC4B8B1), size: 25),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+
+                    Container(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Tanggal Lahir',
+                            style: TextStyle(
+                              color: Color(0xFFC4B8B1),
+                              fontSize: 12,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '1 Januari 2000',
+                            style: TextStyle(
+                              color: Color(0xFFC4B8B1),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Color(0xFFC4B8B1),
+              ),
+
+              //nomor telepon ---------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(Icons.phone, color: Color(0xFF826754), size: 25),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+
+                    Container(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Nomor Telepon',
+                            style: TextStyle(
+                              color: Color(0xFF705D54),
+                              fontSize: 12,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: '081 123 456 789',
+                              hintStyle: TextStyle(
+                                color: Color(0xFF000000),
+                                fontSize: 16,
+                                fontFamily: 'NunitoSans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                              border: InputBorder.none,
+                              isDense: true,
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                            style: TextStyle(
+                              color: Color(0xFF000000),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Color(0xFFC4B8B1),
+              ),
+
+              //nik ------------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(Icons.credit_card, color: Color(0xFFC4B8B1), size: 25),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+
+                    Container(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'NIK',
+                            style: TextStyle(
+                              color: Color(0xFFC4B8B1),
+                              fontSize: 12,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '3203 0101 0100 0001',
+                            style: TextStyle(
+                              color: Color(0xFFC4B8B1),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Color(0xFFC4B8B1),
+              ),
+
+              //nama perusahaan ------------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(Icons.business, color: Color(0xFF826754), size: 25),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+
+                    Container(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Nama Perusahaan',
+                            style: TextStyle(
+                              color: Color(0xFF705D54),
+                              fontSize: 12,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: 'PT Widya Mandala',
+                              hintStyle: TextStyle(
+                                color: Color(0xFF000000),
+                                fontSize: 16,
+                                fontFamily: 'NunitoSans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                              border: InputBorder.none,
+                              isDense: true,
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                            style: TextStyle(
+                              color: Color(0xFF000000),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Color(0xFFC4B8B1),
+              ),
+
+              //jenis perusahaan ------------------------------------------------------------------------
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(Icons.star, color: Color(0xFF826754), size: 25),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+
+                    Container(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Jenis Perusahaan',
+                            style: TextStyle(
+                              color: Color(0xFF705D54),
+                              fontSize: 12,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Radio<String>(
+                                    value: 'Perusahaan',
+                                    groupValue: _jenisPengguna,
+                                    activeColor: Color(0xFF705D54),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _jenisPengguna = value!;
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                    'Perusahaan',
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54),
+                                      fontSize: 16,
+                                      fontFamily: 'NunitoSans',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Radio<String>(
+                                    value: 'Perorangan',
+                                    groupValue: _jenisPengguna,
+                                    activeColor: Color(0xFF705D54),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _jenisPengguna = value!;
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                    'Perorangan',
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54),
+                                      fontSize: 16,
+                                      fontFamily: 'NunitoSans',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Color(0xFFC4B8B1),
+              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
+        height: 80,
+        decoration: BoxDecoration(
+          color: Color(0xFFF1E9E5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: Container(
+                height: 600,
+                decoration: BoxDecoration(
+                  color: Color(0xFF705D54),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+
+                    SizedBox(width: 10),
+                    Text(
+                      'Simpan Perubahan',
+                      style: TextStyle(
+                        fontFamily: 'NutinoSans',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: Color(0xFFF1E9E5),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+
+          ],
         ),
       ),
     );
