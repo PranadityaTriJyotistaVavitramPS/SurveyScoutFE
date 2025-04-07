@@ -40,7 +40,7 @@ class _ClientSayaPageState extends State<Clientsaya> {
                       Container(
                         width: 50,
                         height: 50, // Tinggi container
-                        //color: Colors.yellow,
+
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start, // Mengatur jarak space-between
                           children: [
@@ -1542,6 +1542,7 @@ class HalamanBaru extends State<JenisPenggunaWidget> {
                 height: 1,
                 color: Color(0xFFC4B8B1),
               ),
+
             ],
           ),
         ),
@@ -1553,39 +1554,45 @@ class HalamanBaru extends State<JenisPenggunaWidget> {
           color: Color(0xFFF1E9E5),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(
-              child: Container(
-                height: 600,
-                decoration: BoxDecoration(
-                  color: Color(0xFF705D54),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-
-                    SizedBox(width: 10),
-                    Text(
-                      'Simpan Perubahan',
-                      style: TextStyle(
-                        fontFamily: 'NutinoSans',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: Color(0xFFF1E9E5),
-                      ),
+              child: GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Perubahan berhasil disimpan"),
+                      backgroundColor: Color(0xFF3A2B24),
+                      duration: Duration(seconds: 2),
                     ),
+                  );
 
-                  ],
+                  Future.delayed(Duration(seconds: 2), () {
+                    Navigator.pop(context);
+                  });
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF705D54),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Simpan Perubahan',
+                    style: TextStyle(
+                      fontFamily: 'NunitoSans',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
-
           ],
         ),
       ),
+
     );
   }
 }
