@@ -14,7 +14,7 @@ class _ClientSayaPageState extends State<Clientsaya> {
   bool isOn2 = false;
   final TextEditingController _controller9 = TextEditingController();
   String? _selectedCompany;
-
+  String imagePath = '';
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +106,17 @@ class _ClientSayaPageState extends State<Clientsaya> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage('assets/images/ellipse2.png'),
+                              image: AssetImage(
+                                imagePath.isEmpty
+                                    ? 'assets/images/ellipse2.png'
+                                    : imagePath,
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
+
                     ),
 
                     Container(
@@ -1084,6 +1089,7 @@ class JenisPenggunaWidget extends StatefulWidget {
 
 class HalamanBaru extends State<JenisPenggunaWidget> {
   String _jenisPengguna = 'Perusahaan';
+  String imagePath = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1130,25 +1136,40 @@ class HalamanBaru extends State<JenisPenggunaWidget> {
                 child: Center(
                   child: Column(
                     children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        clipBehavior: Clip.none,
-                        children: [
-                          CircleAvatar(
-                            radius: 24,
-                            backgroundImage: AssetImage('assets/images/ellipse2.png'),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                              radius: 10,
-                              backgroundColor: Color(0xFF826754),
-                              child: Icon(Icons.edit, color: Color(0xFFffffff), size: 10),
+                      GestureDetector(
+                        onTap: () {
+                          if (imagePath.isEmpty) {
+                            _ubahfotoprofil(context);
+                          } else {
+                            _ubahdanhapusfotoprofil(context);
+                          }
+                        },
+
+                        child: Stack(
+                          alignment: Alignment.center,
+                          clipBehavior: Clip.none,
+                          children: [
+                            CircleAvatar(
+                              radius: 24,
+                              backgroundImage: AssetImage(
+                                imagePath.isEmpty
+                                    ? 'assets/images/ellipse2.png'
+                                    : imagePath,
+                              ),
                             ),
-                          ),
-                        ],
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Color(0xFF826754),
+                                child: Icon(Icons.edit, color: Color(0xFFffffff), size: 10),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+
                       SizedBox(height: 10),
                       Text(
                         'Agus Ginting',
@@ -1593,6 +1614,563 @@ class HalamanBaru extends State<JenisPenggunaWidget> {
         ),
       ),
 
+    );
+  }
+
+  void _ubahfotoprofil(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      isScrollControlled: true, // Allow bottom sheet to adjust based on its content
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Apply rounded corners to the content
+          child: Container(
+            width: MediaQuery.of(context).size.width, // Make the width fill the screen
+            padding: EdgeInsets.all(24),
+            color: Color(0xFFF1E9E5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Makes the bottom sheet take only necessary height
+              children: [
+                Container(
+                  width: 100,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFB0B0B0),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  'Ubah Foto Profil',
+                  style: TextStyle(
+                    fontFamily: 'NunitoSans',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    color: Color(0xFF705D54),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Container(
+                  padding:EdgeInsets.all(0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Future.delayed(Duration.zero, () {
+                              _unggahdarigaleri(context);
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFF826754),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.picture_in_picture_rounded, color: Color(0xFFF1E9E5), size: 30),
+                                SizedBox(height: 10),
+                                // Batasi lebar teks biar bisa wrap
+                                Container(
+                                  constraints: BoxConstraints(maxWidth: 100),
+                                  child: Text(
+                                    'Unggah dari Galeri',
+                                    textAlign: TextAlign.center,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: Color(0xFFF1E9E5),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Future.delayed(Duration.zero, () {
+                              _unggahdarigaleri(context); // atau _gunakanKamera(context);
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFFD7CCC8),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.camera_alt, color: Color(0xFF826754), size: 30),
+                                SizedBox(height: 10),
+                                Container(
+                                  constraints: BoxConstraints(maxWidth: 100),
+                                  child: Text(
+                                    'Gunakan Kamera',
+                                    textAlign: TextAlign.center,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: Color(0xFF826754),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _ubahdanhapusfotoprofil(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      isScrollControlled: true, // Allow bottom sheet to adjust based on its content
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Apply rounded corners to the content
+          child: Container(
+            width: MediaQuery.of(context).size.width, // Make the width fill the screen
+            padding: EdgeInsets.all(24),
+            color: Color(0xFFF1E9E5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Makes the bottom sheet take only necessary height
+              children: [
+                Container(
+                  width: 100,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFB0B0B0),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  'Ubah Foto Profil',
+                  style: TextStyle(
+                    fontFamily: 'NunitoSans',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    color: Color(0xFF705D54),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Container(
+                  padding:EdgeInsets.all(0),
+                  child: SizedBox(
+                    height: 170,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Future.delayed(Duration.zero, () {
+                                    _unggahdarigaleri(context);
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF826754),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  padding: EdgeInsets.all(15),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.picture_in_picture_rounded, color: Color(0xFFF1E9E5), size: 30),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        constraints: BoxConstraints(maxWidth: 100),
+                                        child: Text(
+                                          'Unggah dari Galeri',
+                                          textAlign: TextAlign.center,
+                                          softWrap: true,
+                                          style: TextStyle(
+                                            fontFamily: 'NunitoSans',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: Color(0xFFF1E9E5),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Future.delayed(Duration.zero, () {
+                                    _unggahdarigaleri(context); // atau _gunakanKamera(context);
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFD7CCC8),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  padding: EdgeInsets.all(15),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.camera_alt, color: Color(0xFF826754), size: 30),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        constraints: BoxConstraints(maxWidth: 100),
+                                        child: Text(
+                                          'Gunakan Kamera',
+                                          textAlign: TextAlign.center,
+                                          softWrap: true,
+                                          style: TextStyle(
+                                            fontFamily: 'NunitoSans',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: Color(0xFF826754),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                              Future.delayed(Duration.zero, () {
+                                _unggahdarigaleri(context);
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD7CCC8),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Hapus Foto Profil',
+                                textAlign: TextAlign.center,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: Color(0xFF826754),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+
+
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _unggahdarigaleri(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(0),
+            color: Color(0xFFF1E9E5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 24),
+                Container(
+                  width: 100,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFB0B0B0),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Ubah Foto Profil",
+                  style: TextStyle(
+                    fontFamily: 'SourceSans3',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF705D54),
+                  ),
+                ),
+                SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 35,
+                  backgroundImage: AssetImage(
+                    imagePath.isEmpty
+                        ? 'assets/images/ubahfotoprofil.png'
+                        : imagePath,
+                  ),
+                ),
+                SizedBox(height: 12),
+
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF826754),
+
+                  ),
+                  child: Row(
+                    children: [
+
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              imagePath = 'assets/images/ubahfotoprofil.png';
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF1E9E5),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Simpan",
+                                  style: TextStyle(
+                                    color: Color(0xFF826754),
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 5),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Color(0xFFF1E9E5), width: 1),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(width: 5),
+                                Text(
+                                  "Batal",
+                                  style: TextStyle(
+                                    color: Color(0xFFF1E9E5),
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _hapusfotoprofil(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(0),
+            color: Color(0xFFF1E9E5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 24),
+                Container(
+                  width: 100,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFB0B0B0),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Ubah Foto Profil",
+                  style: TextStyle(
+                    fontFamily: 'SourceSans3',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF705D54),
+                  ),
+                ),
+                SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 35,
+                  backgroundImage: AssetImage(
+                    imagePath.isEmpty
+                        ? 'assets/images/ubahfotoprofil.png'
+                        : imagePath,
+                  ),
+                ),
+                SizedBox(height: 12),
+
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF826754),
+
+                  ),
+                  child: Row(
+                    children: [
+
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              imagePath = 'assets/images/ubahfotoprofil.png';
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF1E9E5),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Simpan",
+                                  style: TextStyle(
+                                    color: Color(0xFF826754),
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 5),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Color(0xFFF1E9E5), width: 1),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(width: 5),
+                                Text(
+                                  "Batal",
+                                  style: TextStyle(
+                                    color: Color(0xFFF1E9E5),
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

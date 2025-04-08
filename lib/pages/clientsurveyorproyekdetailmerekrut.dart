@@ -345,7 +345,7 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    // Show the bottom sheet when the button is pressed
+
                                     _showPelamar(context);
                                   },
                                   child: Container(
@@ -490,15 +490,19 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min, // Makes the bottom sheet take only necessary height
               children: [
-                Divider(
-                  thickness: 3, // Adjust thickness to make the line thicker
-                  indent: 150,   // Make the line shorter by adding space from the start
-                  endIndent: 150, // Make the line shorter by adding space from the end
-                  color: Color(0xFFB0B0B0), // Optional: set a color for the divider
+                Container(
+                  width: 100,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFB0B0B0),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
                 SizedBox(height: 10), // Spasi antara garis dan tulisan
                 Stack(
                   children: [
+
+                    SizedBox(height: 30),
                     Align(
                       alignment: Alignment.center,
                       child: Row(
